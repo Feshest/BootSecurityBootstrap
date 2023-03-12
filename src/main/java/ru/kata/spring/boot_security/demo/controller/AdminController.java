@@ -42,7 +42,7 @@ public class AdminController {
         return "editUser";
     }
 
-    @PatchMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     public String updateUser(@ModelAttribute("user") User user,
                              @RequestParam(value = "roles", required = false) Integer[] userRoles) {
         Set<Role> roles = new HashSet<>();

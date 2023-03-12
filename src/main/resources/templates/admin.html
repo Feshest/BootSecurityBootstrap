@@ -14,8 +14,9 @@
       <div th:fragment="blackheader">
         <div class="d-flex text-white">
           <div class="p-2 w-100 bg-dark fs-5">
-            <b>[[${#authentication.getPrincipal().getUsername()}]]</b>
-            with roles: [[${#authentication.getPrincipal().authorities}]]
+            <span th:text="${#authentication.getName()}"></span> with roles:
+            <span th:each="role : ${#authentication.getAuthorities()}"
+                  th:text="${role.getAuthority().replace('ROLE_', ' ') + ' '}"></span>
           </div>
           <div class="p-2 bg-dark">
             <a class="text-secondary text-decoration-none pe-3" href="/logout">Logout</a>
@@ -60,17 +61,20 @@
                       <td th:text="${user.getName()}"></td>
                       <td th:text="${user.getLastName()}"></td>
                       <td th:text="${user.getAge()}"></td>
-                      <td th:text="${user.getUsername()}"></td>
-                      <td th:text="${user.getRoles()}"></td>
+                      <td th:text="${user.getUserName()}"></td>
+                      <td>
+                          <span th:each="role,iterStat : ${user.getRoles()}"
+                                th:text="${role.getRoleName().replace('ROLE_', '  ') + ' '}"></span>
+                      </td>
                       <td>
                           <button type="button" class="btn btn-info btn-sm text-white" data-toggle="modal"
-                                  data-target="#editModal">Edit
+                                  th:data-target="'#editModal' + ${user.getId()}">Edit
                           </button>
-                          <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                          <div class="modal fade" th:id="'editModal' + ${user.getId()}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                                aria-labelledby="staticBackgroundLabel" aria-hidden="true">
                                <div class="modal-dialog">
                                    <div class="modal-content">
-                                       <form class="container form-horizontal" th:method="PATCH" th:action="@{admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+                                       <form class="container form-horizontal" th:method="PUT" th:action="@{admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
                                             <div class="modal-header">
                                                 <h5 class="modal-title">Edit user</h5>
                                                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
@@ -87,7 +91,7 @@
                                                    Age
                                                    <input th:value="*{age}" name="age" type="text" class="form-control" placeholder="Age"/>
                                                    Username
-                                                   <input th:value="*{username}" name="userName" type="text" class="form-control" placeholder="userName"/>
+                                                   <input th:value="*{userName}" name="userName" type="text" class="form-control" placeholder="userName"/>
                                                    Password
                                                    <input th:value="*{password}" name="password" type="password" class="form-control" placeholder="Password"/>
                                                    Roles
@@ -112,9 +116,9 @@
 
                       <td>
                           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                  data-target="#deleteModal">Delete
+                                  th:data-target="'#deleteModal' + ${user.getId()}">Delete
                           </button>
-                          <div class="modal fade" id="deleteModal"
+                          <div class="modal fade" th:id="'deleteModal' + ${user.getId()}"
                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                                aria-labelledby="staticBackdropLabel" aria-hidden="true">
                               <div class="modal-dialog">

@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -54,8 +55,9 @@ public class User implements UserDetails {
     public String getName() {
         return name;
     }
-    public void setName() {
-        this.name = name;
+
+    public String getUserName() {
+        return userName;
     }
     public String getLastName() {
         return lastName;
@@ -75,6 +77,10 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Role> getRoles() {
@@ -123,8 +129,8 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "roles_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Set<Role> roles;
 
     @Override

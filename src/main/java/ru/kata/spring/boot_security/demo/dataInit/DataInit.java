@@ -25,8 +25,8 @@ public class DataInit {
 
     @EventListener(ContextRefreshedEvent.class)
     public void contextRefreshedEvent() {
-        roleService.saveRole(new Role("USER"));
         roleService.saveRole(new Role("ADMIN"));
+        roleService.saveRole(new Role("USER"));
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.getRoleByName("USER"));
         userService.saveUser(new User("user","user", 22, "user@mail.ru", "1", roles));

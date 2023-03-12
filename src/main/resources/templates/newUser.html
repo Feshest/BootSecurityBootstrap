@@ -34,35 +34,41 @@
                     <div align="center">
                         <div class="col-sm" style="max-width: 350px;">
                             <input type="hidden" th:field="*{enabled}"/>
+
                             <label class="h6 mt-3" for="name"><b>First name</b></label>
                             <input type="text" class="form-control" th:field="*{name}"
                                    id="name" placeholder="First name" required/>
+
                             <label class="h6 mt-3" for="surname"><b>Last name</b></label>
                             <input type="text" class="form-control" th:field="*{lastName}"
                                    id="surname" placeholder="Last name"/>
+
                             <label class="h6 mt-3" for="username"><b>Username</b></label>
-                            <input type="username" class="form-control" th:field="*{username}"
-                                   id="username" placeholder="Username"/>
+                            <input type="text" class="form-control" th:field="*{userName}"
+                                   id="username" placeholder="Username" required/>
+
                             <label class="h6 mt-3" for="age"><b>Age</b></label>
                             <input type="text" class="form-control" th:field="*{age}"
                                    id="age" placeholder="age" required/>
+
                             <label class="h6 mt-3" for="password"><b>Password</b></label>
                             <input type="password" class="form-control" th:field="*{password}"
                                    id="password" placeholder="Password" required/>
-                            <label class="h6 mt-3"><b>Roles</b></label>
+
                             <div class="btn-group list-group border border-1 p-2 w-100"
                                  style="height: 60px; overflow-y: auto;"
                                  role="group" id="roleGroup">
                                 <th:block th:each="role: ${roles}">
                                     <input type="checkbox" class="btn-check" name="checkboxRoles"
-                                           th:value="${role.getKey().id}"
-                                           th:id="${role.getKey().id}"
+                                           th:value="${role.getKey().getId()}"
+                                           th:id="${role.getKey().getId()}"
                                            th:checked="${role.getValue()}"/>
-                                    <label class="btn-outline-primary" th:for="${role.getKey().id}"
+                                    <label class="btn-outline-primary" th:for="${role.getKey().getId()}"
                                            th:text="${role.getKey().getRoleName()}"></label>
                                 </th:block>
 
                             </div>
+
                             <input class="btn btn-success mt-3" type="submit" value="Add new user"/>
 
                         </div>
